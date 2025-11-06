@@ -119,6 +119,30 @@
             50% { transform: scale(1.05); box-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-pink); }
         }
 
+        /* [BARU] Tombol Skip Intro */
+        #skip-intro-button {
+            position: absolute;
+            bottom: 2rem; /* 32px */
+            right: 2rem; /* 32px */
+            z-index: 10; /* Di atas video */
+            background: rgba(0, 0, 0, 0.5);
+            color: white;
+            padding: 0.5rem 1rem; /* 8px 16px */
+            border-radius: 0.5rem; /* 8px */
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.875rem; /* 14px */
+            text-transform: uppercase;
+            transition: all 0.3s ease;
+            opacity: 0.7;
+            cursor: pointer;
+        }
+        #skip-intro-button:hover {
+            background: rgba(0, 0, 0, 0.8);
+            opacity: 1;
+            transform: scale(1.05);
+        }
+
         /* --- Latar Belakang & Efek (Tetap Ada) --- */
         #bg-container {
             position: fixed;
@@ -632,6 +656,10 @@
             <i class="fas fa-play mr-3"></i>
             Layla Nexus sea
         </button>
+        <!-- [BARU] Tombol Skip Intro -->
+        <button id="skip-intro-button" class="hidden">
+            Skip Intro <i class="fas fa-forward ml-2"></i>
+        </button>
     </div>
 
     <!-- Background & Partikel (Struktur HTML Sama) --><div id="bg-container">
@@ -841,6 +869,7 @@
         const videoOverlay = document.getElementById('video-intro-overlay');
         const introVideo = document.getElementById('intro-video');
         const startButton = document.getElementById('start-button');
+        const skipIntroButton = document.getElementById('skip-intro-button'); // [PERBAIKAN] Deklarasi dipindahkan ke sini
 
         function hideOverlay() {
             videoOverlay.classList.add('hidden');
@@ -852,6 +881,7 @@
         startButton.addEventListener('click', () => {
             startButton.style.display = 'none';
             introVideo.classList.remove('hidden');
+            skipIntroButton.classList.remove('hidden'); // [BARU]
             
             introVideo.muted = false; 
             const playPromise = introVideo.play();
@@ -867,6 +897,12 @@
         
         introVideo.addEventListener('ended', () => {
             hideOverlay();
+        });
+
+        // [BARU] Event listener untuk tombol skip
+        skipIntroButton.addEventListener('click', () => {
+            introVideo.pause(); // Hentikan video & audio
+            hideOverlay();      // Sembunyikan overlay
         });
 
         // --- Sistem Partikel (TIDAK BERUBAH) ---
@@ -935,6 +971,7 @@
             const confirmationMessage = document.getElementById('confirmation-message');
             const confirmOkBtn = document.getElementById('confirm-ok-btn');
             const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+            // const skipIntroButton = document.getElementById('skip-intro-button'); // [PERBAIKAN] Deklarasi duplikat dihapus dari sini
 
             let portals = [];
             let onConfirmCallback = null;
