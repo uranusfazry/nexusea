@@ -94,6 +94,19 @@
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-90deg);
             }
+
+            /* [BARU] Terapkan rotasi yang sama ke gambar background */
+            #bg-image {
+                /* Balik dimensi: lebar = tinggi viewport, tinggi = lebar viewport */
+                width: 100vh; 
+                height: 100vw;
+                
+                /* Pusatkan dan rotasi -90 derajat */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-90deg);
+            }
         }
         
         /* Tombol Start Baru (Lebih Gen Z) */
@@ -135,6 +148,8 @@
             object-fit: cover;
             opacity: 0.35; /* Sedikit lebih gelap agar konten lebih menonjol */
             filter: brightness(0.6) saturate(1.2);
+            /* [BARU] Menambahkan transisi untuk resize */
+            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
         }
 
         #particle-canvas {
