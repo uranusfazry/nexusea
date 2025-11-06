@@ -46,102 +46,8 @@
         .font-rajdhani { font-family: 'Rajdhani', sans-serif; }
         .font-exo2 { font-family: 'Exo 2', sans-serif; }
 
-        /* --- Overlay Video Intro (Fungsionalitas Sama, Styling Disesuaikan) --- */
-        #video-intro-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: black; /* [MODIFIKASI] Pastikan background hitam */
-            z-index: 9999;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            transition: opacity 0.8s ease;
-            overflow: hidden; /* [BARU] Mencegah overflow video */
-        }
-
-        #video-intro-overlay.hidden {
-            opacity: 0;
-            pointer-events: none;
-        }
-
-        #intro-video {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            will-change: transform; /* [DITAMBAHKAN] Memicu akselerasi GPU */
-            /* [BARU] Menambahkan transisi untuk resize */
-            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
-        }
-        
-        /* [BARU] Logika Rotasi Video untuk Desktop */
-        @media (min-width: 1024px) {
-            #video-intro-overlay {
-                /* Pastikan background hitam untuk menutupi sisi kosong saat rotasi */
-                background: black; 
-            }
-            #intro-video {
-                /* Balik dimensi: lebar video = tinggi viewport, tinggi video = lebar viewport */
-                /* Ini membuat video portrait (9:16) menjadi seukuran (100vh x 100vw) */
-                width: 100vh; 
-                height: 100vw;
-                
-                /* Pusatkan dan rotasi -90 derajat */
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(-90deg);
-            }
-        }
-        
-        /* Tombol Start Baru (Lebih Gen Z) */
-        #start-button {
-            font-family: 'Orbitron', sans-serif;
-            background: linear-gradient(135deg, var(--neon-blue), var(--neon-pink));
-            color: white;
-            text-shadow: 0 0 10px white, 0 0 20px var(--neon-pink);
-            box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-pink);
-            border: 2px solid white;
-            transform: scale(1);
-            animation: pulse 2s infinite;
-            cursor: pointer;
-            border-radius: 0.75rem; /* Rounded */
-            /* [BARU] Pastikan tombol di atas video yang berputar */
-            position: relative;
-            z-index: 10;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); box-shadow: 0 0 20px var(--neon-blue), 0 0 40px var(--neon-pink); }
-            50% { transform: scale(1.05); box-shadow: 0 0 30px var(--neon-blue), 0 0 60px var(--neon-pink); }
-        }
-
-        /* [BARU] Tombol Skip Intro */
-        #skip-intro-button {
-            position: absolute;
-            bottom: 2rem; /* 32px */
-            right: 2rem; /* 32px */
-            z-index: 10; /* Di atas video */
-            background: rgba(0, 0, 0, 0.5);
-            color: white;
-            padding: 0.5rem 1rem; /* 8px 16px */
-            border-radius: 0.5rem; /* 8px */
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            font-family: 'Orbitron', sans-serif;
-            font-size: 0.875rem; /* 14px */
-            text-transform: uppercase;
-            transition: all 0.3s ease;
-            opacity: 0.7;
-            cursor: pointer;
-        }
-        #skip-intro-button:hover {
-            background: rgba(0, 0, 0, 0.8);
-            opacity: 1;
-            transform: scale(1.05);
-        }
+        /* --- [DIHAPUS] CSS Terkait Video Intro, Start Button, dan Skip Button --- */
+        /* CSS untuk #video-intro-overlay, #intro-video, #start-button, @keyframes pulse, #skip-intro-button telah dihapus */
 
         /* --- Latar Belakang & Efek (Tetap Ada) --- */
         #bg-container {
@@ -155,22 +61,37 @@
         }
 
         /* --- [MODIFIKASI DARI STYLE_UPDATES.CSS] --- */
-        #bg-image {
+        /* [BARU] Class umum untuk media background */
+        .bg-media {
+            position: absolute;
+            top: 0;
+            left: 0;
             width: 100%;
             height: 100%;
             object-fit: cover;
-            opacity: 0.35; /* Sedikit lebih gelap agar konten lebih menonjol */
             filter: brightness(0.6) saturate(1.2);
-            
-            /* [MODIFIKASI] Menambahkan transisi dan akselerasi GPU */
-            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
-            will-change: transform; 
+            /* [MODIFIKASI] Samakan transisi dan tambahkan opacity */
+            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease, opacity 1.5s ease;
+            will-change: transform, opacity;
+        }
+
+        /* [BARU] Video di atas, opacity awal 0.35 */
+        #bg-video {
+            opacity: 0.35;
+            z-index: 1;
+        }
+        
+        #bg-image {
+            /* [MODIFIKASI] Opasitas awal 0 (disembunyikan) */
+            opacity: 0; 
+            /* [BARU] z-index di bawah video */
+            z-index: 0; 
         }
         
         /* --- [TAMBAHAN BARU DARI STYLE_UPDATES.CSS] --- */
         @media (min-width: 1024px) {
-            /* [BARU] Logika Rotasi Background untuk Desktop */
-            #bg-image {
+            /* [MODIFIKASI] Terapkan rotasi ke class .bg-media */
+            .bg-media {
                 /* Balik dimensi agar cocok dengan video */
                 width: 100vh; 
                 height: 100vw;
@@ -700,24 +621,19 @@
 </head>
 <body>
 
-    <!-- Video Intro Overlay (Struktur HTML Sama, JS Diperbarui) --><div id="video-intro-overlay" class="flex flex-col items-center justify-center">
-        <video id="intro-video" playsinline class="hidden">
-            <source src="https://files.catbox.moe/669xox.mp4" type="video/mp4">
-        </video>
-        <button id="start-button" class="px-8 py-4 text-2xl font-bold uppercase transition-all">
-            <i class="fas fa-play mr-3"></i>
-            Layla Nexus sea
-        </button>
-        <!-- [BARU] Tombol Skip Intro -->
-        <button id="skip-intro-button" class="hidden">
-            Skip Intro <i class="fas fa-forward ml-2"></i>
-        </button>
-    </div>
+    <!-- [DIHAPUS] Video Intro Overlay telah dihapus -->
 
     <!-- [PERBAIKAN] Mengembalikan elemen background dan canvas yang hilang -->
     <!-- Background & Partikel (Struktur HTML Sama) -->
     <div id="bg-container">
-        <img id="bg-image" src="https://i.imghippo.com/files/IXTw5166Kqs.jpg" alt="MLBB Nexus Background">
+        <!-- [BARU] Video background -->
+        <video id="bg-video" class="bg-media" autoplay muted playsinline>
+            <!-- Menggunakan video vertikal yang sama dengan intro asli, karena CSS rotasi sudah dibuat untuk itu -->
+            <source src="https://files.catbox.moe/669xox.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <!-- Gambar fallback yang sudah ada -->
+        <img id="bg-image" class="bg-media" src="https://i.imghippo.com/files/IXTw5166Kqs.jpg" alt="MLBB Nexus Background">
     </div>
     <canvas id="particle-canvas"></canvas>
 
@@ -802,7 +718,7 @@
     <!-- Main Content (Refactor) --><main class="container mx-auto px-4 py-8 relative content-layer pt-28"> <!-- Padding atas ditambah */ --><header class="text-center mb-12">
             <!-- Profile (MODIFIKASI: Diubah dari <img> menjadi <video>) --><div class="profile">
                 <!-- Ganti img dengan video, tambahkan object-position --><video src="https://files.catbox.moe/g9p1at.mp4" alt="Profile Video" autoplay loop muted playsinline
-                       style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU --></video>
+                        style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU --></video>
             </div>
             <!-- Judul (Tidak berubah, sudah bagus) --><div class="relative inline-block mb-6">
                 <h1 class="glitch-effect text-5xl md:text-7xl font-bold mb-4 neon-text-blue" data-text="LAYLA NEXUS SEA">LAYLA NEXUS SEA</h1>
@@ -937,53 +853,7 @@
     <input type="file" id="import-file-input" class="hidden" accept=".zip,.txt,application/json">
 
     <script>
-        // --- [MODIFIKASI] Logika Video Intro (SAMA SEPERTI ASLI) ---
-        const videoOverlay = document.getElementById('video-intro-overlay');
-        const introVideo = document.getElementById('intro-video');
-        const startButton = document.getElementById('start-button');
-        const skipIntroButton = document.getElementById('skip-intro-button'); // [PERBAIKAN] Deklarasi dipindahkan ke sini
-
-        function hideOverlay() {
-            videoOverlay.classList.add('hidden');
-            setTimeout(() => {
-                videoOverlay.style.display = 'none';
-            }, 800);
-        }
-
-        startButton.addEventListener('click', () => {
-            startButton.style.display = 'none';
-            introVideo.classList.remove('hidden');
-            skipIntroButton.classList.remove('hidden'); // [BARU]
-            
-            introVideo.muted = false; 
-            const playPromise = introVideo.play();
-
-            if (playPromise !== undefined) {
-                playPromise.catch(error => {
-                    // [FIX] Cek apakah error ini adalah "interrupted by pause" yang normal
-                    // Jika iya, itu karena pengguna menekan "Skip". Jangan log ini sebagai error.
-                    if (error.name === 'AbortError' || (error.message && error.message.includes('interrupted by a call to pause'))) {
-                        // Ini normal jika pengguna menekan "Skip" dengan cepat.
-                        console.log("Pemutaran video diinterupsi oleh pengguna (misalnya, menekan 'Skip').");
-                    } else {
-                        // Ini adalah error pemutaran video yang sebenarnya
-                        console.error("Gagal memutar video:", error);
-                        // Jika gagal (misalnya di browser yang ketat), langsung sembunyikan overlay
-                        hideOverlay();
-                    }
-                });
-            }
-        });
-        
-        introVideo.addEventListener('ended', () => {
-            hideOverlay();
-        });
-
-        // [BARU] Event listener untuk tombol skip
-        skipIntroButton.addEventListener('click', () => {
-            introVideo.pause(); // Hentikan video & audio
-            hideOverlay();      // Sembunyikan overlay
-        });
+        // --- [DIHAPUS] Logika Video Intro telah dihapus ---
 
         // --- Sistem Partikel (TIDAK BERUBAH) ---
         const canvas = document.getElementById('particle-canvas');
@@ -1037,6 +907,40 @@
 
         // --- [MODIFIKASI] Aplikasi Portal Utama ---
         document.addEventListener('DOMContentLoaded', function() {
+
+            // --- [BARU] Logika Video Background ke Gambar ---
+            const bgVideo = document.getElementById('bg-video');
+            const bgImage = document.getElementById('bg-image');
+
+            if (bgVideo && bgImage) {
+                // Handler saat video selesai
+                const handleVideoEnd = () => {
+                    bgVideo.style.opacity = '0';
+                    bgImage.style.opacity = '0.35'; // Fade ke opasitas asli gambar (0.35)
+                };
+
+                // Handler jika video error
+                const handleVideoError = (e) => {
+                    console.error("Video background gagal diputar:", e);
+                    handleVideoEnd(); // Langsung tampilkan gambar
+                };
+                
+                bgVideo.addEventListener('ended', handleVideoEnd);
+                bgVideo.addEventListener('error', handleVideoError);
+
+                // Coba putar video, tangani kegagalan autoplay
+                const playPromise = bgVideo.play();
+                if (playPromise !== undefined) {
+                    playPromise.catch(error => {
+                        console.warn("Autoplay video background diblokir/gagal:", error);
+                        // Jika autoplay gagal, langsung panggil handleVideoEnd
+                        // untuk memudarkan ke gambar.
+                        handleVideoEnd();
+                    });
+                }
+            }
+            // --- [AKHIR BARU] ---
+
             const portalsGrid = document.getElementById('portals-grid');
             const portalForm = document.getElementById('portal-form');
             // const portalCountDesktop = document.getElementById('portal-count'); // [DIHAPUS] Elemen ini sudah tidak ada
@@ -1051,7 +955,7 @@
             const confirmationMessage = document.getElementById('confirmation-message');
             const confirmOkBtn = document.getElementById('confirm-ok-btn');
             const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
-            // const skipIntroButton = document.getElementById('skip-intro-button'); // [PERBAIKAN] Deklarasi duplikat dihapus dari sini
+            // [DIHAPUS] Variabel terkait intro (videoOverlay, introVideo, startButton, skipIntroButton) telah dihapus
 
             let portals = [];
             let onConfirmCallback = null;
