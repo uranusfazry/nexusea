@@ -94,18 +94,13 @@
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-90deg);
             }
-
-            /* [BARU] Terapkan rotasi yang sama ke gambar background */
-            #bg-image {
-                /* Balik dimensi: lebar = tinggi viewport, tinggi = lebar viewport */
-                width: 100vh; 
-                height: 100vw;
-                
-                /* Pusatkan dan rotasi -90 derajat */
-                position: absolute;
-                top: 50%;
-                left: 50%;
-                transform: translate(-50%, -50%) rotate(-90deg);
+            
+            /* [BARU] Terapkan rotasi ke video profile */
+            .profile video {
+                transform: rotate(-90deg);
+                /* Pastikan skala video menyesuaikan setelah rotasi */
+                transform-origin: center center;
+                scale: 1.2; /* Sedikit zoom agar pas */
             }
         }
         
@@ -509,6 +504,8 @@
             object-fit: cover;
             position: relative;
             z-index: 1;
+            /* [BARU] Tambahkan transisi */
+            transition: transform 0.5s ease, scale 0.5s ease; 
         }
 
         /* --- Time Display (Refactor) --- */
