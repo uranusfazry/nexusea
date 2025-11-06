@@ -613,23 +613,39 @@
         }
 
         /* --- Input & Textarea (Refactor) --- */
-        input, textarea {
+        input, textarea, select { /* [MODIFIKASI] Menambahkan select */
             background: rgba(18, 9, 42, 0.8) !important;
             border: 1px solid rgba(0, 212, 255, 0.3);
             transition: all 0.3s ease;
             border-radius: 0.5rem; /* Rounded */
             color: white; /* Pastikan teks input putih */
         }
-        input:focus, textarea:focus {
+        input:focus, textarea:focus, select:focus { /* [MODIFIKASI] Menambahkan select */
             border-color: var(--neon-blue);
             box-shadow: 0 0 15px rgba(0, 212, 255, 0.5);
             outline: none;
             background: rgba(18, 9, 42, 0.9) !important; /* Sedikit lebih gelap saat fokus */
         }
+        /* [BARU] Styling untuk option di select */
+        select option {
+            background: var(--dark-bg);
+            color: white;
+            padding: 8px;
+        }
+
         /* Placeholder styling */
         ::placeholder {
             color: rgba(255, 255, 255, 0.4);
             opacity: 1;
+        }
+
+        /* [BARU] Menambahkan style untuk tag code di helper text */
+        .modal-content code {
+            background: rgba(0,0,0,0.3);
+            color: var(--neon-pink);
+            padding: 2px 5px;
+            border-radius: 4px;
+            font-family: 'Exo 2', sans-serif;
         }
 
         /* --- Scrollbar (Tetap Ada) --- */
@@ -821,6 +837,34 @@
                     <label for="portal-url" class="block mb-2 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Destination URL</label>
                     <input type="url" id="portal-url" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="https://your-link.com" required>
                 </div>
+
+                <!-- [PERUBAHAN DIMULAI] Input Ikon diubah menjadi Select -->
+                <div>
+                    <label for="portal-icon" class="block mb-2 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Pilih Ikon Portal</label>
+                    <select id="portal-icon" class="w-full p-3 rounded-lg text-white font-rajdhani text-base appearance-none">
+                        <option value="fas fa-globe">🌐 Globe (Default)</option>
+                        <option value="fas fa-link">🔗 Link</option>
+                        <option value="fas fa-home">🏠 Home</option>
+                        <option value="fas fa-gamepad">🎮 Game</option>
+                        <option value="fas fa-wallet">💰 Wallet</option>
+                        <option value="fas fa-shopping-cart">🛒 Store</option>
+                        <option value="fas fa-star">⭐ Favorite</option>
+                        <option value="fas fa-book">📚 Book</option>
+                        <option value="fas fa-video">🎬 Video</option>
+                        <option value="fas fa-music">🎵 Music</option>
+                        <option value="fas fa-image">🖼️ Image</option>
+                        <option value="fas fa-info-circle">ℹ️ Info</option>
+                        <option value="fab fa-whatsapp">💬 WhatsApp</option>
+                        <option value="fab fa-facebook">👍 Facebook</option>
+                        <option value="fab fa-instagram">📸 Instagram</option>
+                        <option value="fab fa-youtube">▶️ YouTube</option>
+                        <option value="fab fa-tiktok">🎵 TikTok</option>
+                        <option value="fab fa-discord">🗣️ Discord</option>
+                        <option value="fab fa-telegram">✈️ Telegram</option>
+                    </select>
+                </div>
+                <!-- [PERUBAHAN SELESAI] -->
+                
                 <div>
                     <label for="portal-description" class="block mb-2 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Description</label>
                     <textarea id="portal-description" rows="2" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="Short description..."></textarea>
@@ -1105,8 +1149,11 @@
                 const name = document.getElementById('portal-name').value;
                 const url = document.getElementById('portal-url').value || "#";
                 const description = document.getElementById('portal-description').value || "";
-                // Ikon default baru yang lebih futuristik
-                const icon = "https://i.imghippo.com/files/EePl9866XxI.png"; // Menggunakan ikon default dari kode asli
+                
+                // [PERUBAHAN DIMULAI] Ambil nilai ikon dari select
+                const icon = document.getElementById('portal-icon').value;
+                // [PERUBAHAN SELESAI]
+                
                 const color = document.querySelector('input[name="portal-color"]:checked').value;
 
                 addPortalToArray(name, url, icon, color, description);
