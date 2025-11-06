@@ -94,14 +94,6 @@
                 left: 50%;
                 transform: translate(-50%, -50%) rotate(-90deg);
             }
-            
-            /* [BARU] Terapkan rotasi ke video profile */
-            .profile video {
-                transform: rotate(-90deg);
-                /* Pastikan skala video menyesuaikan setelah rotasi */
-                transform-origin: center center;
-                scale: 1.2; /* Sedikit zoom agar pas */
-            }
         }
         
         /* Tombol Start Baru (Lebih Gen Z) */
@@ -137,15 +129,36 @@
             overflow: hidden;
         }
 
+        /* --- [MODIFIKASI DARI STYLE_UPDATES.CSS] --- */
         #bg-image {
             width: 100%;
             height: 100%;
             object-fit: cover;
             opacity: 0.35; /* Sedikit lebih gelap agar konten lebih menonjol */
             filter: brightness(0.6) saturate(1.2);
-            /* [BARU] Menambahkan transisi untuk resize */
+            
+            /* [MODIFIKASI] Menambahkan transisi dan akselerasi GPU */
             transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
+            will-change: transform; 
         }
+        
+        /* --- [TAMBAHAN BARU DARI STYLE_UPDATES.CSS] --- */
+        @media (min-width: 1024px) {
+            /* [BARU] Logika Rotasi Background untuk Desktop */
+            #bg-image {
+                /* Balik dimensi agar cocok dengan video */
+                width: 100vh; 
+                height: 100vw;
+                
+                /* Pusatkan dan rotasi -90 derajat */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-90deg);
+            }
+        }
+        /* --- [AKHIR PERUBAHAN] --- */
+
 
         #particle-canvas {
             position: fixed;
@@ -504,8 +517,6 @@
             object-fit: cover;
             position: relative;
             z-index: 1;
-            /* [BARU] Tambahkan transisi */
-            transition: transform 0.5s ease, scale 0.5s ease; 
         }
 
         /* --- Time Display (Refactor) --- */
@@ -658,7 +669,7 @@
 
                             <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">System Reset</h3>
                             <button onclick="showConfirmationModal('Yakin ingin mereset semua pengaturan?', resetAllSettings)"
-                                class="btn-neon btn-neon-pink w-full text-sm mb-3">
+                                    class="btn-neon btn-neon-pink w-full text-sm mb-3">
                                 <i class="fas fa-undo mr-2"></i>Reset All
                             </button>
 
@@ -716,7 +727,7 @@
 
             <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">Sistem</h3>
             <button onclick="showConfirmationModal('Yakin ingin mereset?', resetAllSettings); closeMobileMenu();"
-                class="btn-neon btn-neon-pink w-full text-sm mb-4">
+                    class="btn-neon btn-neon-pink w-full text-sm mb-4">
                 <i class="fas fa-undo mr-2"></i>Reset All
             </button>
         </div>
@@ -743,7 +754,7 @@
             <div class="profile">
                 <!-- Ganti img dengan video, tambahkan object-position -->
                 <video src="https://files.catbox.moe/g9p1at.mp4" alt="Profile Video" autoplay loop muted playsinline
-                        style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU -->
+                       style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU -->
                 </video>
             </div>
             <!-- Judul (Tidak berubah, sudah bagus) -->
