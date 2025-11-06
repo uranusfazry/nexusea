@@ -52,13 +52,14 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: black;
+            background: black; /* [MODIFIKASI] Pastikan background hitam */
             z-index: 9999;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             transition: opacity 0.8s ease;
+            overflow: hidden; /* [BARU] Mencegah overflow video */
         }
 
         #video-intro-overlay.hidden {
@@ -71,6 +72,28 @@
             height: 100%;
             object-fit: cover;
             will-change: transform; /* [DITAMBAHKAN] Memicu akselerasi GPU */
+            /* [BARU] Menambahkan transisi untuk resize */
+            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease;
+        }
+        
+        /* [BARU] Logika Rotasi Video untuk Desktop */
+        @media (min-width: 1024px) {
+            #video-intro-overlay {
+                /* Pastikan background hitam untuk menutupi sisi kosong saat rotasi */
+                background: black; 
+            }
+            #intro-video {
+                /* Balik dimensi: lebar video = tinggi viewport, tinggi video = lebar viewport */
+                /* Ini membuat video portrait (9:16) menjadi seukuran (100vh x 100vw) */
+                width: 100vh; 
+                height: 100vw;
+                
+                /* Pusatkan dan rotasi -90 derajat */
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%) rotate(-90deg);
+            }
         }
         
         /* Tombol Start Baru (Lebih Gen Z) */
@@ -85,6 +108,9 @@
             animation: pulse 2s infinite;
             cursor: pointer;
             border-radius: 0.75rem; /* Rounded */
+            /* [BARU] Pastikan tombol di atas video yang berputar */
+            position: relative;
+            z-index: 10;
         }
 
         @keyframes pulse {
@@ -462,7 +488,7 @@
             transform: scale(1.1);
             box-shadow: 0 0 50px var(--neon-purple), 0 0 80px var(--neon-blue);
         }
-        .profile img {
+        .profile img, .profile video { /* [MODIFIKASI] Terapkan ke video juga */
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -705,7 +731,7 @@
             <div class="profile">
                 <!-- Ganti img dengan video, tambahkan object-position -->
                 <video src="https://files.catbox.moe/g9p1at.mp4" alt="Profile Video" autoplay loop muted playsinline
-                       style="width: 100%; height: 100%; object-fit: cover; object-position: 50% 25%; position: relative; z-index: 1; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU -->
+                        style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU -->
                 </video>
             </div>
             <!-- Judul (Tidak berubah, sudah bagus) -->
@@ -831,6 +857,7 @@
             if (playPromise !== undefined) {
                 playPromise.catch(error => {
                     console.error("Gagal memutar video:", error);
+                    // Jika gagal (misalnya di browser yang ketat), langsung sembunyikan overlay
                     hideOverlay();
                 });
             }
