@@ -662,19 +662,22 @@
         </button>
     </div>
 
-    <!-- Background & Partikel (Struktur HTML Sama) --><div id="bg-container">
+    <!-- [PERBAIKAN] Mengembalikan elemen background dan canvas yang hilang -->
+    <!-- Background & Partikel (Struktur HTML Sama) -->
+    <div id="bg-container">
         <img id="bg-image" src="https://i.imghippo.com/files/IXTw5166Kqs.jpg" alt="MLBB Nexus Background">
     </div>
     <canvas id="particle-canvas"></canvas>
 
-    <!-- Navbar (Struktur HTML Refactor) --><nav class="navbar fixed top-0 left-0 right-0 z-50 content-layer">
+    <!-- Navbar (Struktur HTML Refactor) -->
+    <nav class="navbar fixed top-0 left-0 right-0 z-50 content-layer">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center h-20"> <!-- Tinggi nav ditambah */ --><!-- Logo --><div id="logo-container" class="flex items-center cursor-pointer">
-                    <!-- Ikon Logo MLBB Style (Baru) --><div class="logo-pulse relative w-10 h-10 flex items-center justify-center">
-                        <i class="fas fa-shield-halved text-3xl neon-text-blue"></i>
-                        <i class="fas fa-bolt text-lg absolute neon-text-pink" style="text-shadow: 0 0 10px var(--neon-pink);"></i>
-                    </div>
-                    <span class="ml-3 font-bold text-xl neon-text-blue font-orbitron tracking-wider">MLBB NEXUS</span>
+            <div class="flex justify-between items-center h-20"> <!-- Tinggi nav ditambah */ -->
+                <!-- Logo -->
+                <div id="logo-container" class="flex items-center cursor-pointer">
+                    <!-- [MODIFIKASI] Logo di kiri, teks di kanan -->
+                    <img src="https://i.imghippo.com/files/EePl9866XxI.png" alt="MLBB Nexus Logo" class="logo-pulse h-10 w-auto">
+                    <span class="font-bold text-xl neon-text-blue font-orbitron tracking-wider ml-3">MLBB LAYLA</span>
                 </div>
 
                 <!-- Navigasi Desktop (Refactor) --><div class="hidden md:flex items-center space-x-8"> <!-- Spasi ditambah */ --><!-- Tombol Pengaturan --><div class="nav-item relative group">
@@ -700,20 +703,7 @@
                                     class="btn-neon btn-neon-pink w-full text-sm mb-3">
                                 <i class="fas fa-undo mr-2"></i>Reset All
                             </button>
-
-                            <!-- Info Sistem (Layout Baru) - DIHAPUS
-                            <h3 class="text-sm neon-text-blue mt-4 mb-3 uppercase tracking-wider font-orbitron">System Info</h3>
-                            <div class="text-xs space-y-2 font-rajdhani p-3 bg-black/30 rounded-lg">
-                                <div class="flex justify-between">
-                                    <span class="opacity-70">Version</span>
-                                    <span class="neon-text-blue font-bold">v7.0.0-nexus</span>
-                                </div>
-                                <div class="flex justify-between">
-                                    <span class="opacity-70">Portals</span>
-                                    <span id="portal-count" class="neon-text-pink font-bold">0</span>
-                                </div>
-                            </div>
-                            --></div>
+                        </div>
                     </div>
                 </div>
 
@@ -753,19 +743,7 @@
                 <i class="fas fa-undo mr-2"></i>Reset All
             </button>
         </div>
-        
-        <!-- Info di Bawah - DIHAPUS
-        <div class="text-xs space-y-2 font-rajdhani p-3 bg-black/30 rounded-lg mt-auto">
-            <div class="flex justify-between">
-                <span class="opacity-70">Version</span>
-                <span class="neon-text-blue font-bold">v7.0.0-nexus</span>
-            </div>
-            <div class="flex justify-between">
-                <span class="opacity-70">Portals</span>
-                <span id="portal-count-mobile" class="neon-text-pink font-bold">0</span>
-            </div>
-        </div>
-        --></div>
+    </div>
 
 
     <!-- Main Content (Refactor) --><main class="container mx-auto px-4 py-8 relative content-layer pt-28"> <!-- Padding atas ditambah */ --><header class="text-center mb-12">
