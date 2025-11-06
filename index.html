@@ -254,7 +254,8 @@
         /* --- Efek Teks Neon (Disederhanakan) --- */
         .neon-text-blue {
             color: var(--neon-blue);
-            text-shadow: 0 0 8px var(--neon-blue), 0 0 16px rgba(0, 212, 255, 0.7);
+            /* [EDIT] Sesuai permintaan glow header */
+            text-shadow: 0 0 10px #00bfff; 
         }
         .neon-text-pink {
             color: var(--neon-pink);
@@ -262,7 +263,8 @@
         }
         .neon-text-purple {
             color: var(--neon-purple);
-            text-shadow: 0 0 8px var(--neon-purple), 0 0 16px rgba(191, 0, 255, 0.7);
+            /* [EDIT] Sesuai permintaan glow footer */
+            text-shadow: 0 0 8px #a020f0; 
         }
 
         /* Efek Glitch (Tetap Ada, Font Disesuaikan) */
@@ -311,6 +313,18 @@
             border-bottom: 1px solid rgba(191, 0, 255, 0.2); /* Border ungu tipis */
             transition: all 0.3s ease;
         }
+
+        /* [EDIT] Atur tinggi Navbar */
+        .navbar .container > div {
+            height: 70px; /* Tinggi mobile */
+            transition: height 0.3s ease; /* Transisi halus */
+        }
+        @media (min-width: 768px) { /* md breakpoint Tailwind (desktop) */
+            .navbar .container > div {
+                height: 90px; /* Tinggi desktop */
+            }
+        }
+
 
         /* Item Navigasi (Refactor) */
         .nav-item {
@@ -642,6 +656,20 @@
             border-top: 1px solid rgba(0, 212, 255, 0.2);
             /* [PERBAIKAN FOOTER] */
             margin-top: auto; /* Mendorong footer ke bawah */
+            
+            /* [EDIT] Atur tinggi dan perataan */
+            height: 60px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding-left: 1rem;
+            padding-right: 1rem;
+        }
+
+        /* [EDIT] Ukuran font footer */
+        footer p:first-child {
+            font-size: 13px;
         }
 
     </style>
@@ -672,7 +700,8 @@
     <!-- Navbar (Struktur HTML Refactor) -->
     <nav class="navbar fixed top-0 left-0 right-0 z-50 content-layer">
         <div class="container mx-auto px-4">
-            <div class="flex justify-between items-center h-20"> <!-- Tinggi nav ditambah */ -->
+            <!-- [EDIT] class 'h-20' dihapus agar CSS bisa mengontrol tinggi -->
+            <div class="flex justify-between items-center"> <!-- Tinggi nav ditambah */ -->
                 <!-- Logo -->
                 <div id="logo-container" class="flex items-center cursor-pointer">
                     <!-- [MODIFIKASI] Logo di kiri, teks di kanan -->
@@ -770,7 +799,9 @@
             <!-- Kartu Portal akan di-render oleh JS di sini --></div>
     </main>
 
-    <!-- Footer (Refactor) --><footer class="text-white py-8 text-center content-layer">
+    <!-- Footer (Refactor) -->
+    <!-- [EDIT] class 'py-8' dihapus agar CSS bisa mengontrol tinggi -->
+    <footer class="text-white text-center content-layer">
         <p class="text-sm opacity-80 font-rajdhani">© 2025 Created by Layla Nexus Sea | All Rights Reserved</p>
         <p class="text-xs mt-2 neon-text-purple font-orbitron">Powered by Uranus Support Technology</p>
     </footer>
