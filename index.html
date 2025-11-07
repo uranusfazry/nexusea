@@ -120,15 +120,15 @@
         }
         /* --- [AKHIR PERUBAHAN] --- */
 
-
+        /* INI ADALAH CSS DARI FILE JAVASCRIPT PERTAMA (SESUAI CONTOH) */
         #particle-canvas {
-            position: fixed;
+            position: fixed; /* Atau 'absolute' tergantung kebutuhan */
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1;
-            pointer-events: none;
+            z-index: 1; /* Di atas BG tapi di bawah konten */
+            pointer-events: none; /* Agar bisa diklik tembus */
         }
 
         /* Efek Glow Latar Belakang (Tetap Ada) */
@@ -649,6 +649,7 @@
         <!-- Gambar fallback yang sudah ada -->
         <img id="bg-image" class="bg-media" src="https://i.imghippo.com/files/IXTw5166Kqs.jpg" alt="MLBB Nexus Background">
     </div>
+    <!-- CANVAS UNTUK PARTIKEL DARI FILE PERTAMA -->
     <canvas id="particle-canvas"></canvas>
 
     <!-- Navbar (Struktur HTML Refactor) -->
@@ -867,8 +868,99 @@
     <input type="file" id="import-file-input" class="hidden" accept=".zip,.txt,application/json">
 
     <script>
-        // ... existing code ... -->
-        // --- [MODIFIKASI] Aplikasi Portal Utama ---
+        // --- [KODE BARU DIMASUKKAN DARI BLOK PERTAMA] ---
+        /**
+         * Modul Sistem Partikel
+         *
+         * Cara Penggunaan:
+         * 1. <canvas id="particle-canvas"></canvas> sudah ada di HTML.
+         * 2. CSS untuk #particle-canvas sudah ada di <style>.
+         * 3. Fungsi ini dipanggil dari DOMContentLoaded di bawah.
+         */
+        function initParticleSystem(canvasId) {
+            const canvas = document.getElementById(canvasId);
+            if (!canvas) {
+                console.error(`Elemen canvas dengan ID "${canvasId}" tidak ditemukan.`);
+                return;
+            }
+
+            const ctx = canvas.getContext('2d');
+            
+            // Set ukuran canvas agar sesuai dengan elemennya
+            // Kita gunakan window.innerWidth/Height untuk kasus 'fixed' fullscreen
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+
+            const particles = [];
+            const particleCount = 50; // Anda bisa sesuaikan jumlah ini
+
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.size = Math.random() * 2 + 0.5;
+                    this.speedX = Math.random() * 0.5 - 0.25;
+                    this.speedY = Math.random() * 0.5 - 0.25;
+                    // Anda bisa mengganti warna-warna ini
+                    this.color = Math.random() > 0.5 ? 'rgba(0, 212, 255, 0.8)' : 'rgba(191, 0, 255, 0.8)';
+                }
+                
+                update() {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                    
+                    // Buat partikel memantul di tepi
+                    if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                    if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+                }
+                
+                draw() {
+                    ctx.fillStyle = this.color;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fill();
+                    // Efek glow dinonaktifkan untuk performa yang lebih baik
+                    // ctx.shadowBlur = 10;
+                    // ctx.shadowColor = this.color;
+                }
+            }
+
+            // Inisialisasi partikel
+            function initParticles() {
+                particles.length = 0; // Kosongkan array jika ada
+                for (let i = 0; i < particleCount; i++) {
+                    particles.push(new Particle());
+                }
+            }
+
+            // Loop animasi
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                requestAnimationFrame(animateParticles);
+            }
+            
+            // Menyesuaikan ukuran canvas saat window di-resize
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+                // Inisialisasi ulang partikel agar tersebar di ukuran baru
+                initParticles(); 
+            });
+
+            // Mulai
+            initParticles();
+            animateParticles();
+            
+            console.log(`Sistem partikel diinisialisasi pada canvas #${canvasId}`);
+        }
+        // --- [AKHIR KODE YANG DIMASUKKAN] ---
+
+
+        // --- [MODIFIKASI] Aplikasi Portal Utama (Kode Asli dari HTML) ---
         document.addEventListener('DOMContentLoaded', function() {
 
             // [BARU] State variable untuk melacak status video
@@ -1203,6 +1295,11 @@
             }
 
             initPortalApp();
+
+            // --- [PANGGILAN FUNGSI BARU] ---
+            // Memanggil sistem partikel setelah aplikasi utama dimuat
+            initParticleSystem('particle-canvas');
+            // --- [AKHIR PANGGILAN FUNGSI BARU] ---
         });
     </script>
 
