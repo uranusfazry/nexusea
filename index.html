@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -70,9 +71,9 @@
             height: 100%;
             object-fit: cover;
             filter: brightness(0.6) saturate(1.2);
-            /* [MODIFIKASI] Samakan transisi dan tambahkan opacity */
-            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease, opacity 1.5s ease;
-            will-change: transform, opacity;
+            /* [MODIFIKASI] Transisi diperbarui untuk menyertakan filter */
+            transition: transform 0.5s ease, width 0.5s ease, height 0.5s ease, opacity 0.5s ease, filter 0.5s ease;
+            will-change: transform, opacity, filter;
         }
 
         /* [BARU] Video di atas, opacity awal 0.35 */
@@ -87,6 +88,21 @@
             /* [BARU] z-index di bawah video */
             z-index: 0; 
         }
+
+        /* --- [BARU] Fitur Light Mode --- */
+        /* Sesuai permintaan: Video tetap sama, gambar menjadi terang */
+        body.light-mode #bg-image {
+            /* Paksa override inline style (0.35) yang diatur JS saat video berakhir */
+            opacity: 1 !important; 
+            filter: brightness(1.2) contrast(1.05) saturate(1.15);
+        }
+        body.light-mode #bg-video {
+             /* Video tetap seperti semula */
+            opacity: 0.35;
+            z-index: 1;
+        }
+        /* --- [AKHIR BARU] --- */
+
         
         /* --- [TAMBAHAN BARU DARI STYLE_UPDATES.CSS] --- */
         @media (min-width: 1024px) {
@@ -852,60 +868,12 @@
     <input type="file" id="import-file-input" class="hidden" accept=".zip,.txt,application/json">
 
     <script>
-        // --- [DIHAPUS] Logika Video Intro telah dihapus ---
-
-        // --- Sistem Partikel (TIDAK BERUBAH) ---
-        const canvas = document.getElementById('particle-canvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-
-        const particles = [];
-        const particleCount = 50;
-
-        class Particle {
-            constructor() {
-                this.x = Math.random() * canvas.width;
-                this.y = Math.random() * canvas.height;
-                this.size = Math.random() * 2 + 0.5;
-                this.speedX = Math.random() * 0.5 - 0.25;
-                this.speedY = Math.random() * 0.5 - 0.25;
-                this.color = Math.random() > 0.5 ? 'rgba(0, 212, 255, 0.8)' : 'rgba(191, 0, 255, 0.8)';
-            }
-            update() {
-                this.x += this.speedX;
-                this.y += this.speedY;
-                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
-                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
-            }
-            draw() {
-                ctx.fillStyle = this.color;
-                ctx.beginPath();
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = this.color;
-            }
-        }
-        for (let i = 0; i < particleCount; i++) {
-            particles.push(new Particle());
-        }
-        function animateParticles() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(particle => {
-                particle.update();
-                particle.draw();
-            });
-            requestAnimationFrame(animateParticles);
-        }
-        animateParticles();
-        window.addEventListener('resize', () => {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        });
-
+        // ... existing code ... -->
         // --- [MODIFIKASI] Aplikasi Portal Utama ---
         document.addEventListener('DOMContentLoaded', function() {
+
+            // [BARU] State variable untuk melacak status video
+            let isVideoFinished = false;
 
             // --- [BARU] Logika Video Background ke Gambar ---
             const bgVideo = document.getElementById('bg-video');
@@ -915,7 +883,12 @@
                 // Handler saat video selesai
                 const handleVideoEnd = () => {
                     bgVideo.style.opacity = '0';
-                    bgImage.style.opacity = '0.35'; // Fade ke opasitas asli gambar (0.35)
+                    // Cek apakah light mode aktif saat video berakhir
+                    // Jika tidak, set ke 0.35. Jika iya, biarkan CSS (opacity: 1 !important) yang menangani
+                    if (!document.body.classList.contains('light-mode')) {
+                        bgImage.style.opacity = '0.35'; // Fade ke opasitas asli gambar (0.35)
+                    }
+                    isVideoFinished = true; // [BARU] Set status video selesai
                 };
 
                 // Handler jika video error
@@ -940,10 +913,11 @@
             }
             // --- [AKHIR BARU] ---
 
+            // [BARU] Deklarasi variabel logo
+            const logoContainer = document.getElementById('logo-container'); 
+            
             const portalsGrid = document.getElementById('portals-grid');
             const portalForm = document.getElementById('portal-form');
-            // const portalCountDesktop = document.getElementById('portal-count'); // [DIHAPUS] Elemen ini sudah tidak ada
-            // const portalCountMobile = document.getElementById('portal-count-mobile'); // [DIHAPUS] Elemen ini sudah tidak ada
             const mobileMenuButton = document.getElementById('mobile-menu-button');
             const mobileMenu = document.getElementById('mobile-menu');
             const mobileMenuOverlay = document.getElementById('mobile-menu-overlay'); // [BARU]
@@ -954,7 +928,6 @@
             const confirmationMessage = document.getElementById('confirmation-message');
             const confirmOkBtn = document.getElementById('confirm-ok-btn');
             const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
-            // [DIHAPUS] Variabel terkait intro (videoOverlay, introVideo, startButton, skipIntroButton) telah dihapus
 
             let portals = [];
             let onConfirmCallback = null;
@@ -982,6 +955,30 @@
                 renderPortals();
                 updateTime();
                 setInterval(updateTime, 1000);
+
+                // --- [BARU] Event listener untuk light mode toggle ---
+                logoContainer.addEventListener('click', () => {
+                    
+                    // [MODIFIKASI] Tambahkan pengecekan apakah video sudah selesai
+                    if (!isVideoFinished) {
+                        console.log("Mode terang dikunci hingga video selesai.");
+                        return; // Hentikan fungsi jika video belum selesai
+                    }
+
+                    document.body.classList.toggle('light-mode');
+                    
+                    // [BARU] Logika tambahan untuk menangani opacity gambar
+                    // Jika kita beralih ke mode terang, dan video SUDAH berakhir
+                    // (yang ditandai dengan opacity video = 0),
+                    // kita tidak perlu melakukan apa-apa karena CSS !important akan menang.
+                    // Jika kita beralih ke mode gelap, kita harus MENGATUR ULANG opacity gambar
+                    // ke 0.35 jika video sudah berakhir.
+                    if (!document.body.classList.contains('light-mode') && bgVideo.style.opacity === '0') {
+                         bgImage.style.opacity = '0.35';
+                    }
+                });
+                // --- [AKHIR BARU] ---
+
 
                 // [MODIFIKASI] Event listener menu mobile
                 mobileMenuButton.addEventListener('click', () => {
@@ -1065,10 +1062,6 @@
 
                     portalsGrid.appendChild(portalElement);
                 });
-
-                // [MODIFIKASI] Update kedua counter
-                // portalCountDesktop.textContent = portals.length; // [DIHAPUS] Menyebabkan error
-                // portalCountMobile.textContent = portals.length; // [DIHAPUS] Menyebabkan error
             }
 
             // --- Fungsionalitas Inti (TIDAK BERUBAH) ---
