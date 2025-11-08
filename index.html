@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MLBB Nexus Portal | Layla Nexus Sea</title>
+    <title>Uranus Fazry MLBB Portal | Layla Nexus Sea</title>
     <!-- Tailwind CSS --><script src="https://cdn.tailwindcss.com"></script>
     <!-- Font Awesome (Ikon) --><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Library untuk Fungsionalitas (TETAP SAMA) --><script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -40,6 +39,12 @@
             /* [PERBAIKAN FOOTER] */
             display: flex;
             flex-direction: column; /* Konten disusun vertikal */
+
+            /* [PENAMBAHAN] Font dipertajam & sedikit ditebalkan */
+            font-weight: 500; /* Defaultnya 400, kita naikkan jadi 500 */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            text-rendering: optimizeLegibility;
         }
 
         /* --- Helper Class untuk Font --- */
@@ -665,547 +670,547 @@
                 </div>
 
                 <!-- Navigasi Desktop (Refactor) --><div class="hidden md:flex items-center space-x-8"> <!-- Spasi ditambah */ --><!-- Tombol Pengaturan --><div class="nav-item relative group">
-                        <button class="flex items-center space-x-2 neon-text-blue font-medium font-orbitron text-sm uppercase">
-                            <i class="fas fa-cog"></i>
-                            <span>Settings</span>
-                            <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    <button class="flex items-center space-x-2 neon-text-blue font-medium font-orbitron text-sm uppercase">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                        <i class="fas fa-chevron-down text-xs transition-transform duration-300 group-hover:rotate-180"></i>
+                    </button>
+                    <!-- Dropdown Menu (Refactor) --><div class="dropdown absolute right-0 mt-2 w-80 rounded-lg p-4">
+                        <h3 class="text-sm neon-text-pink mb-3 uppercase tracking-wider font-orbitron">Portal Management</h3>
+                        <button onclick="showAddLinkModal()" class="btn-neon btn-neon-blue w-full text-sm mb-3">
+                            <i class="fas fa-plus mr-2"></i>Add New Portal
                         </button>
-                        <!-- Dropdown Menu (Refactor) --><div class="dropdown absolute right-0 mt-2 w-80 rounded-lg p-4">
-                            <h3 class="text-sm neon-text-pink mb-3 uppercase tracking-wider font-orbitron">Portal Management</h3>
-                            <button onclick="showAddLinkModal()" class="btn-neon btn-neon-blue w-full text-sm mb-3">
-                                <i class="fas fa-plus mr-2"></i>Add New Portal
-                            </button>
 
-                            <h3 class="text-sm neon-text-blue mt-4 mb-3 uppercase tracking-wider font-orbitron">Data Management</h3>
-                            <div class="grid grid-cols-2 gap-3">
-                                <button onclick="importData()" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-upload mr-1"></i>Import</button>
-                                <button onclick="backupData()" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-download mr-1"></i>Backup</button>
-                            </div>
-
-                            <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">System Reset</h3>
-                            <button onclick="showConfirmationModal('Yakin ingin mereset semua pengaturan?', resetAllSettings)"
-                                    class="btn-neon btn-neon-pink w-full text-sm mb-3">
-                                <i class="fas fa-undo mr-2"></i>Reset All
-                            </button>
+                        <h3 class="text-sm neon-text-blue mt-4 mb-3 uppercase tracking-wider font-orbitron">Data Management</h3>
+                        <div class="grid grid-cols-2 gap-3">
+                            <button onclick="importData()" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-upload mr-1"></i>Import</button>
+                            <button onclick="backupData()" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-download mr-1"></i>Backup</button>
                         </div>
+
+                        <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">System Reset</h3>
+                        <button onclick="showConfirmationModal('Yakin ingin mereset semua pengaturan?', resetAllSettings)"
+                                class="btn-neon btn-neon-pink w-full text-sm mb-3">
+                            <i class="fas fa-undo mr-2"></i>Reset All
+                        </button>
                     </div>
                 </div>
-
-                <!-- Tombol Menu Mobile (Ikon Baru) --><div class="md:hidden">
-                    <button id="mobile-menu-button" class="neon-text-pink text-3xl focus:outline-none">
-                        <i class="fas fa-bars-staggered"></i> <!-- Ikon hamburger baru --></button>
-                </div>
-            </div>
-        </div>
-    </nav>
-
-    <!-- Mobile Menu (Struktur HTML Refactor Total) --><div id="mobile-menu-overlay" class="fixed inset-0 z-50 hidden md:hidden" onclick="closeMobileMenu()"></div>
-    <div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-xs z-[60] transform translate-x-full transition-transform duration-300 ease-in-out md:hidden glass-morphism p-6 flex flex-col space-y-4">
-        
-        <!-- Header Menu Mobile --><div class="flex justify-between items-center pb-4 border-b border-purple-500/30">
-            <span class="font-orbitron neon-text-blue text-lg">MENU</span>
-            <button onclick="closeMobileMenu()" class="neon-text-pink text-2xl">
-                <i class="fas fa-times"></i>
-            </button>
-        </div>
-
-        <!-- Konten Menu Mobile --><div class="flex-grow overflow-y-auto">
-            <h3 class="text-sm neon-text-pink mb-3 uppercase tracking-wider font-orbitron">Portal</h3>
-            <button onclick="showAddLinkModal(); closeMobileMenu();" class="btn-neon btn-neon-blue w-full text-sm mb-4">
-                <i class="fas fa-plus mr-2"></i>Add Portal
-            </button>
-
-            <h3 class="text-sm neon-text-blue mt-4 mb-3 uppercase tracking-wider font-orbitron">Data</h3>
-            <div class="grid grid-cols-2 gap-3 mb-4">
-                <button onclick="importData(); closeMobileMenu();" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-upload mr-1"></i>Import</button>
-                <button onclick="backupData(); closeMobileMenu();" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-download mr-1"></i>Backup</button>
             </div>
 
-            <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">Sistem</h3>
-            <button onclick="showConfirmationModal('Yakin ingin mereset?', resetAllSettings); closeMobileMenu();"
-                    class="btn-neon btn-neon-pink w-full text-sm mb-4">
-                <i class="fas fa-undo mr-2"></i>Reset All
-            </button>
+            <!-- Tombol Menu Mobile (Ikon Baru) --><div class="md:hidden">
+                <button id="mobile-menu-button" class="neon-text-pink text-3xl focus:outline-none">
+                    <i class="fas fa-bars-staggered"></i> <!-- Ikon hamburger baru --></button>
+            </div>
+        </div>
+    </div>
+</nav>
+
+<!-- Mobile Menu (Struktur HTML Refactor Total) --><div id="mobile-menu-overlay" class="fixed inset-0 z-50 hidden md:hidden" onclick="closeMobileMenu()"></div>
+<div id="mobile-menu" class="fixed top-0 right-0 h-full w-4/5 max-w-xs z-[60] transform translate-x-full transition-transform duration-300 ease-in-out md:hidden glass-morphism p-6 flex flex-col space-y-4">
+    
+    <!-- Header Menu Mobile --><div class="flex justify-between items-center pb-4 border-b border-purple-500/30">
+        <span class="font-orbitron neon-text-blue text-lg">MENU</span>
+        <button onclick="closeMobileMenu()" class="neon-text-pink text-2xl">
+            <i class="fas fa-times"></i>
+        </button>
+    </div>
+
+    <!-- Konten Menu Mobile --><div class="flex-grow overflow-y-auto">
+        <h3 class="text-sm neon-text-pink mb-3 uppercase tracking-wider font-orbitron">Portal</h3>
+        <button onclick="showAddLinkModal(); closeMobileMenu();" class="btn-neon btn-neon-blue w-full text-sm mb-4">
+            <i class="fas fa-plus mr-2"></i>Add Portal
+        </button>
+
+        <h3 class="text-sm neon-text-blue mt-4 mb-3 uppercase tracking-wider font-orbitron">Data</h3>
+        <div class="grid grid-cols-2 gap-3 mb-4">
+            <button onclick="importData(); closeMobileMenu();" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-upload mr-1"></i>Import</button>
+            <button onclick="backupData(); closeMobileMenu();" class="btn-neon btn-neon-purple w-full text-xs"><i class="fas fa-download mr-1"></i>Backup</button>
+        </div>
+
+        <h3 class="text-sm neon-text-pink mt-4 mb-3 uppercase tracking-wider font-orbitron">Sistem</h3>
+        <button onclick="showConfirmationModal('Yakin ingin mereset?', resetAllSettings); closeMobileMenu();"
+                class="btn-neon btn-neon-pink w-full text-sm mb-4">
+            <i class="fas fa-undo mr-2"></i>Reset All
+        </button>
+    </div>
+</div>
+
+
+<!-- Main Content (Refactor) --><main class="container mx-auto px-4 py-8 relative content-layer pt-20"> <!-- Padding atas ditambah */ --><header class="text-center mb-12">
+        <!-- Profile (MODIFIKASI: Diubah dari <img> menjadi <video>) --><div class="profile">
+            <!-- Ganti img dengan video, tambahkan object-position --><video src="https://files.catbox.moe/g9p1at.mp4" alt="Profile Video" autoplay loop muted playsinline
+                style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU --></video>
+        </div>
+        <!-- Judul (Tidak berubah, sudah bagus) --><div class="relative inline-block mb-6">
+            <h1 class="glitch-effect text-5xl md:text-7xl font-bold mb-4 neon-text-blue" data-text="LAYLA NEXUS SEA">LAYLA NEXUS SEA</h1>
+        </div>
+        <p class="text-lg md:text-xl neon-text-purple uppercase tracking-wider font-semibold font-orbitron">MLBB Creator & Web Developer</p>
+        <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 leading-relaxed font-rajdhani">
+        </p>
+    </header>
+
+    <!-- Tampilan Waktu (Tidak berubah, sudah bagus) --><div class="flex justify-center mb-12">
+        <div class="time-container rounded-lg p-4 text-center">
+            <div id="time" class="text-3xl md:text-4xl font-bold neon-text-blue font-orbitron">00:00:00</div>
+            <div id="date" class="text-base md:text-lg uppercase tracking-wider mt-1 font-rajdhani">Loading...</div>
         </div>
     </div>
 
+    <!-- Grid Portal (Layout Diberi Jarak Lebih) --><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mb-12" id="portals-grid">
+        <!-- Kartu Portal akan di-render oleh JS di sini --></div>
+</main>
 
-    <!-- Main Content (Refactor) --><main class="container mx-auto px-4 py-8 relative content-layer pt-20"> <!-- Padding atas ditambah */ --><header class="text-center mb-12">
-            <!-- Profile (MODIFIKASI: Diubah dari <img> menjadi <video>) --><div class="profile">
-                <!-- Ganti img dengan video, tambahkan object-position --><video src="https://files.catbox.moe/g9p1at.mp4" alt="Profile Video" autoplay loop muted playsinline
-                        style="object-position: 50% 25%; will-change: transform;"> <!-- [DITAMBAHKAN] Memicu akselerasi GPU --></video>
+<!-- Footer (Refactor) -->
+<!-- [EDIT] class 'py-8' dihapus agar CSS bisa mengontrol tinggi -->
+<footer class="text-white text-center content-layer">
+    <p class="text-sm opacity-80 font-rajdhani">© 2025 Created by Layla Nexus Sea | All Rights Reserved</p>
+    <p class="text-xs mt-2 neon-text-purple font-orbitron">Powered by Uranus Support Technology</p>
+</footer>
+
+<!-- Modal Tambah Portal (Refactor) --><div id="add-portal-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay">
+    <!-- [MODIFIKASI] Padding utama dikurangi lagi dari p-6/p-8 menjadi p-5/p-6 -->
+    <div class="modal-content rounded-xl p-5 md:p-6 max-w-sm w-full mx-6 relative">
+        <button onclick="document.getElementById('add-portal-modal').classList.add('hidden')"
+                class="absolute top-4 right-4 text-3xl neon-text-pink hover:scale-125 transition-all">×</button>
+        <!-- [MODIFIKASI] Margin bawah dikurangi lagi dari mb-4 ke mb-3 -->
+        <h2 class="text-2xl neon-text-pink mb-3 uppercase tracking-wider font-orbitron font-bold">Create New Portal</h2>
+
+        <!-- [MODIFIKASI] Jarak diperkecil lagi dari space-y-2 ke space-y-1 (sangat rapat) -->
+        <form id="portal-form" class="space-y-1">
+            <div>
+                <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
+                <label for="portal-name" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Portal Name</label>
+                <input type="text" id="portal-name" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="Portal Title" required>
             </div>
-            <!-- Judul (Tidak berubah, sudah bagus) --><div class="relative inline-block mb-6">
-                <h1 class="glitch-effect text-5xl md:text-7xl font-bold mb-4 neon-text-blue" data-text="LAYLA NEXUS SEA">LAYLA NEXUS SEA</h1>
+            <div>
+                <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
+                <label for="portal-url" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Destination URL</label>
+                <input type="url" id="portal-url" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="https://your-link.com" required>
             </div>
-            <p class="text-lg md:text-xl neon-text-purple uppercase tracking-wider font-semibold font-orbitron">MLBB Creator & Web Developer</p>
-            <p class="max-w-2xl mx-auto mt-6 text-base md:text-lg text-gray-300 leading-relaxed font-rajdhani">
-            </p>
-        </header>
 
-        <!-- Tampilan Waktu (Tidak berubah, sudah bagus) --><div class="flex justify-center mb-12">
-            <div class="time-container rounded-lg p-4 text-center">
-                <div id="time" class="text-3xl md:text-4xl font-bold neon-text-blue font-orbitron">00:00:00</div>
-                <div id="date" class="text-base md:text-lg uppercase tracking-wider mt-1 font-rajdhani">Loading...</div>
+            <!-- [PERUBAHAN DIMULAI] Input Ikon diubah menjadi Select -->
+            <div>
+                <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
+                <label for="portal-icon" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Pilih Ikon Portal</label>
+                <select id="portal-icon" class="w-full p-3 rounded-lg text-white font-rajdhani text-base appearance-none">
+                    <option value="fas fa-globe">🌐 Globe (Default)</option>
+                    <option value="fas fa-link">🔗 Link</option>
+                    <option value="fas fa-home">🏠 Home</option>
+                    <option value="fas fa-gamepad">🎮 Game</option>
+                    <option value="fas fa-wallet">💰 Wallet</option>
+                    <option value="fas fa-shopping-cart">🛒 Store</option>
+                    <option value="fas fa-star">⭐ Favorite</option>
+                    <option value="fas fa-book">📚 Book</option>
+                    <option value="fas fa-video">🎬 Video</option>
+                    <option value="fas fa-music">🎵 Music</option>
+                    <option value="fas fa-image">🖼️ Image</option>
+                    <option value="fas fa-info-circle">ℹ️ Info</option>
+                    <option value="fab fa-whatsapp">💬 WhatsApp</option>
+                    <option value="fab fa-facebook">👍 Facebook</option>
+                    <option value="fab fa-instagram">📸 Instagram</option>
+                    <option value="fab fa-youtube">▶️ YouTube</option>
+                    <option value="fab fa-tiktok">🎵 TikTok</option>
+                    <option value="fab fa-discord">🗣️ Discord</option>
+                    <option value="fab fa-telegram">✈️ Telegram</option>
+                </select>
             </div>
-        </div>
-
-        <!-- Grid Portal (Layout Diberi Jarak Lebih) --><div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8 mb-12" id="portals-grid">
-            <!-- Kartu Portal akan di-render oleh JS di sini --></div>
-    </main>
-
-    <!-- Footer (Refactor) -->
-    <!-- [EDIT] class 'py-8' dihapus agar CSS bisa mengontrol tinggi -->
-    <footer class="text-white text-center content-layer">
-        <p class="text-sm opacity-80 font-rajdhani">© 2025 Created by Layla Nexus Sea | All Rights Reserved</p>
-        <p class="text-xs mt-2 neon-text-purple font-orbitron">Powered by Uranus Support Technology</p>
-    </footer>
-
-    <!-- Modal Tambah Portal (Refactor) --><div id="add-portal-modal" class="fixed inset-0 flex items-center justify-center z-50 hidden modal-overlay">
-        <!-- [MODIFIKASI] Padding utama dikurangi lagi dari p-6/p-8 menjadi p-5/p-6 -->
-        <div class="modal-content rounded-xl p-5 md:p-6 max-w-sm w-full mx-6 relative">
-            <button onclick="document.getElementById('add-portal-modal').classList.add('hidden')"
-                    class="absolute top-4 right-4 text-3xl neon-text-pink hover:scale-125 transition-all">×</button>
-            <!-- [MODIFIKASI] Margin bawah dikurangi lagi dari mb-4 ke mb-3 -->
-            <h2 class="text-2xl neon-text-pink mb-3 uppercase tracking-wider font-orbitron font-bold">Create New Portal</h2>
-
-            <!-- [MODIFIKASI] Jarak diperkecil lagi dari space-y-2 ke space-y-1 (sangat rapat) -->
-            <form id="portal-form" class="space-y-1">
-                <div>
-                    <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
-                    <label for="portal-name" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Portal Name</label>
-                    <input type="text" id="portal-name" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="Portal Title" required>
+            <!-- [PERUBAHAN SELESAI] -->
+            
+            <div>
+                <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
+                <label for="portal-description" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Description</label>
+                <textarea id="portal-description" rows="2" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="Short description..."></textarea>
+            </div>
+            <div>
+                <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
+                <label class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Portal Theme</label>
+                <!-- [MODIFIKASI] Padding atas dikurangi dari pt-2 ke pt-1 -->
+                <div class="flex justify-around pt-1">
+                    <!-- Pilihan Radio Button (Styling Ditingkatkan) --><label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-blue-500/10">
+                        <input type="radio" name="portal-color" value="#00d4ff" class="w-5 h-5" style="accent-color: var(--neon-blue);" checked>
+                        <span class="neon-text-blue font-bold font-orbitron">Blue</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-pink-500/10">
+                        <input type="radio" name="portal-color" value="#ff2a9e" class="w-5 h-5" style="accent-color: var(--neon-pink);">
+                        <span class="neon-text-pink font-bold font-orbitron">Pink</span>
+                    </label>
+                    <label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-purple-500/10">
+                        <input type="radio" name="portal-color" value="#bf00ff" class="w-5 h-5" style="accent-color: var(--neon-purple);">
+                        <span class="neon-text-purple font-bold font-orbitron">Purple</span>
+                    </label>
                 </div>
-                <div>
-                    <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
-                    <label for="portal-url" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Destination URL</label>
-                    <input type="url" id="portal-url" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="https://your-link.com" required>
-                </div>
-
-                <!-- [PERUBAHAN DIMULAI] Input Ikon diubah menjadi Select -->
-                <div>
-                    <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
-                    <label for="portal-icon" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Pilih Ikon Portal</label>
-                    <select id="portal-icon" class="w-full p-3 rounded-lg text-white font-rajdhani text-base appearance-none">
-                        <option value="fas fa-globe">🌐 Globe (Default)</option>
-                        <option value="fas fa-link">🔗 Link</option>
-                        <option value="fas fa-home">🏠 Home</option>
-                        <option value="fas fa-gamepad">🎮 Game</option>
-                        <option value="fas fa-wallet">💰 Wallet</option>
-                        <option value="fas fa-shopping-cart">🛒 Store</option>
-                        <option value="fas fa-star">⭐ Favorite</option>
-                        <option value="fas fa-book">📚 Book</option>
-                        <option value="fas fa-video">🎬 Video</option>
-                        <option value="fas fa-music">🎵 Music</option>
-                        <option value="fas fa-image">🖼️ Image</option>
-                        <option value="fas fa-info-circle">ℹ️ Info</option>
-                        <option value="fab fa-whatsapp">💬 WhatsApp</option>
-                        <option value="fab fa-facebook">👍 Facebook</option>
-                        <option value="fab fa-instagram">📸 Instagram</option>
-                        <option value="fab fa-youtube">▶️ YouTube</option>
-                        <option value="fab fa-tiktok">🎵 TikTok</option>
-                        <option value="fab fa-discord">🗣️ Discord</option>
-                        <option value="fab fa-telegram">✈️ Telegram</option>
-                    </select>
-                </div>
-                <!-- [PERUBAHAN SELESAI] -->
-                
-                <div>
-                    <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
-                    <label for="portal-description" class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Description</label>
-                    <textarea id="portal-description" rows="2" class="w-full p-3 rounded-lg text-white font-rajdhani text-base" placeholder="Short description..."></textarea>
-                </div>
-                <div>
-                    <!-- [MODIFIKASI] Margin bawah label dikurangi dari mb-2 ke mb-1 -->
-                    <label class="block mb-1 neon-text-blue uppercase text-sm tracking-wider font-orbitron">Portal Theme</label>
-                    <!-- [MODIFIKASI] Padding atas dikurangi dari pt-2 ke pt-1 -->
-                    <div class="flex justify-around pt-1">
-                        <!-- Pilihan Radio Button (Styling Ditingkatkan) --><label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-blue-500/10">
-                            <input type="radio" name="portal-color" value="#00d4ff" class="w-5 h-5" style="accent-color: var(--neon-blue);" checked>
-                            <span class="neon-text-blue font-bold font-orbitron">Blue</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-pink-500/10">
-                            <input type="radio" name="portal-color" value="#ff2a9e" class="w-5 h-5" style="accent-color: var(--neon-pink);">
-                            <span class="neon-text-pink font-bold font-orbitron">Pink</span>
-                        </label>
-                        <label class="flex items-center space-x-2 cursor-pointer p-2 rounded-lg transition-all hover:bg-purple-500/10">
-                            <input type="radio" name="portal-color" value="#bf00ff" class="w-5 h-5" style="accent-color: var(--neon-purple);">
-                            <span class="neon-text-purple font-bold font-orbitron">Purple</span>
-                        </label>
-                    </div>
-                </div>
-                <!-- Tombol Aksi Modal (Refactor) -->
-                <!-- [MODIFIKASI] Padding atas dikurangi lagi dari pt-2 ke pt-1 -->
-                <div class="flex justify-end space-x-3 pt-1">
-                    <button type="button" onclick="document.getElementById('add-portal-modal').classList.add('hidden')"
-                            class="btn-secondary px-5 py-2 text-sm">
-                        Cancel
-                    </button>
-                    <button type="submit"
-                            class="btn-neon btn-neon-blue px-6 py-2 text-sm">
-                        Create
-                    </button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <!-- Modal Konfirmasi (Refactor) --><div id="confirmation-modal" class="fixed inset-0 flex items-center justify-center z-[60] hidden modal-overlay">
-        <div class="modal-content rounded-xl p-8 max-w-sm w-full mx-4 relative text-center">
-            <h2 class="text-xl neon-text-pink mb-4 font-bold font-orbitron">Confirm Action</h2>
-            <p id="confirmation-message" class="mb-6 text-gray-300 font-rajdhani text-lg">Are you sure?</p>
-            <div class="flex justify-center space-x-4">
-                <button id="confirm-cancel-btn" class="btn-secondary px-6 py-2 text-sm">
+            </div>
+            <!-- Tombol Aksi Modal (Refactor) -->
+            <!-- [MODIFIKASI] Padding atas dikurangi lagi dari pt-2 ke pt-1 -->
+            <div class="flex justify-end space-x-3 pt-1">
+                <button type="button" onclick="document.getElementById('add-portal-modal').classList.add('hidden')"
+                        class="btn-secondary px-5 py-2 text-sm">
                     Cancel
                 </button>
-                <button id="confirm-ok-btn" class="btn-neon btn-neon-pink px-6 py-2 text-sm">
-                    Confirm
+                <button type="submit"
+                        class="btn-neon btn-neon-blue px-6 py-2 text-sm">
+                    Create
                 </button>
             </div>
+        </form>
+    </div>
+</div>
+
+<!-- Modal Konfirmasi (Refactor) --><div id="confirmation-modal" class="fixed inset-0 flex items-center justify-center z-[60] hidden modal-overlay">
+    <div class="modal-content rounded-xl p-8 max-w-sm w-full mx-4 relative text-center">
+        <h2 class="text-xl neon-text-pink mb-4 font-bold font-orbitron">Confirm Action</h2>
+        <p id="confirmation-message" class="mb-6 text-gray-300 font-rajdhani text-lg">Are you sure?</p>
+        <div class="flex justify-center space-x-4">
+            <button id="confirm-cancel-btn" class="btn-secondary px-6 py-2 text-sm">
+                Cancel
+            </button>
+            <button id="confirm-ok-btn" class="btn-neon btn-neon-pink px-6 py-2 text-sm">
+                Confirm
+            </button>
         </div>
     </div>
+</div>
 
-    <input type="file" id="import-file-input" class="hidden" accept=".zip,.txt,application/json">
+<input type="file" id="import-file-input" class="hidden" accept=".zip,.txt,application/json">
 
-    <script>
-        // ... existing code ... -->
-        // --- [MODIFIKASI] Aplikasi Portal Utama ---
-        document.addEventListener('DOMContentLoaded', function() {
+<script>
+    // ... existing code ... -->
+    // --- [MODIFIKASI] Aplikasi Portal Utama ---
+    document.addEventListener('DOMContentLoaded', function() {
 
-            // [BARU] State variable untuk melacak status video
-            let isVideoFinished = false;
+        // [BARU] State variable untuk melacak status video
+        let isVideoFinished = false;
 
-            // --- [BARU] Logika Video Background ke Gambar ---
-            const bgVideo = document.getElementById('bg-video');
-            const bgImage = document.getElementById('bg-image');
+        // --- [BARU] Logika Video Background ke Gambar ---
+        const bgVideo = document.getElementById('bg-video');
+        const bgImage = document.getElementById('bg-image');
 
-            if (bgVideo && bgImage) {
-                // Handler saat video selesai
-                const handleVideoEnd = () => {
-                    bgVideo.style.opacity = '0';
-                    // Cek apakah light mode aktif saat video berakhir
-                    // Jika tidak, set ke 0.35. Jika iya, biarkan CSS (opacity: 1 !important) yang menangani
-                    if (!document.body.classList.contains('light-mode')) {
-                        bgImage.style.opacity = '0.35'; // Fade ke opasitas asli gambar (0.35)
-                    }
-                    isVideoFinished = true; // [BARU] Set status video selesai
-                };
-
-                // Handler jika video error
-                const handleVideoError = (e) => {
-                    console.error("Video background gagal diputar:", e);
-                    handleVideoEnd(); // Langsung tampilkan gambar
-                };
-                
-                bgVideo.addEventListener('ended', handleVideoEnd);
-                bgVideo.addEventListener('error', handleVideoError);
-
-                // Coba putar video, tangani kegagalan autoplay
-                const playPromise = bgVideo.play();
-                if (playPromise !== undefined) {
-                    playPromise.catch(error => {
-                        console.warn("Autoplay video background diblokir/gagal:", error);
-                        // Jika autoplay gagal, langsung panggil handleVideoEnd
-                        // untuk memudarkan ke gambar.
-                        handleVideoEnd();
-                    });
+        if (bgVideo && bgImage) {
+            // Handler saat video selesai
+            const handleVideoEnd = () => {
+                bgVideo.style.opacity = '0';
+                // Cek apakah light mode aktif saat video berakhir
+                // Jika tidak, set ke 0.35. Jika iya, biarkan CSS (opacity: 1 !important) yang menangani
+                if (!document.body.classList.contains('light-mode')) {
+                    bgImage.style.opacity = '0.35'; // Fade ke opasitas asli gambar (0.35)
                 }
+                isVideoFinished = true; // [BARU] Set status video selesai
+            };
+
+            // Handler jika video error
+            const handleVideoError = (e) => {
+                console.error("Video background gagal diputar:", e);
+                handleVideoEnd(); // Langsung tampilkan gambar
+            };
+            
+            bgVideo.addEventListener('ended', handleVideoEnd);
+            bgVideo.addEventListener('error', handleVideoError);
+
+            // Coba putar video, tangani kegagalan autoplay
+            const playPromise = bgVideo.play();
+            if (playPromise !== undefined) {
+                playPromise.catch(error => {
+                    console.warn("Autoplay video background diblokir/gagal:", error);
+                    // Jika autoplay gagal, langsung panggil handleVideoEnd
+                    // untuk memudarkan ke gambar.
+                    handleVideoEnd();
+                });
             }
+        }
+        // --- [AKHIR BARU] ---
+
+        // [BARU] Deklarasi variabel logo
+        const logoContainer = document.getElementById('logo-container'); 
+        
+        const portalsGrid = document.getElementById('portals-grid');
+        const portalForm = document.getElementById('portal-form');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const mobileMenuOverlay = document.getElementById('mobile-menu-overlay'); // [BARU]
+        const timeDisplay = document.getElementById('time');
+        const dateDisplay = document.getElementById('date');
+        const importFileInput = document.getElementById('import-file-input');
+        const confirmationModal = document.getElementById('confirmation-modal');
+        const confirmationMessage = document.getElementById('confirmation-message');
+        const confirmOkBtn = document.getElementById('confirm-ok-btn');
+        const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+
+        let portals = [];
+        let onConfirmCallback = null;
+
+        // Default portal (TIDAK BERUBAH)
+        const defaultPortals = [
+            { 
+                name: 'Layla Premium Access', 
+                url: 'https://api.whatsapp.com/send/?phone=6287872521809&text=Halo%2C+saya+ingin+membeli+Akses+Website+Premium+Tanpa+Iklan+sebesar+Rp25.000.+Mohon+transfer+ke+DANA+087734421123+dan+kirimkan+bukti+pembayarannya.+Pesanan+akan+diproses+maksimal+1x24+jam.+Terima+kasih.&type=phone_number&app_absent=0', 
+                icon: 'fas fa-gem', 
+                color: '#bf00ff', 
+                description: 'Upgrade sekarang — akses semua website uranus tanpa iklan cuma Rp25K' 
+            },
+            { 
+                name: 'Buy Layla Nexus Sea Code', 
+                url: 'https://api.whatsapp.com/send/?phone=6287872521809&text=Halo%2C+saya+ingin+membeli+Kode+Website+MLBB+Layla+Skin+Nexus+Sea+sebesar+Rp100.000.+Mohon+transfer+ke+DANA+087734421123+dan+kirimkan+bukti+pembayarannya.+Pesanan+akan+diproses+maksimal+1x24+jam.+Terima+kasih.&type=phone_number&app_absent=0', 
+                icon: 'fas fa-shopping-cart', 
+                color: '#00f0ff', 
+                description: 'Beli kode website MLBB Layla Nexus Sea edisi premium seharga Rp100K' 
+            }
+        ];
+
+        function initPortalApp() {
+            portals = JSON.parse(localStorage.getItem('portals')) || defaultPortals;
+            renderPortals();
+            updateTime();
+            setInterval(updateTime, 1000);
+
+            // --- [BARU] Event listener untuk light mode toggle ---
+            logoContainer.addEventListener('click', () => {
+                
+                // [MODIFIKASI] Tambahkan pengecekan apakah video sudah selesai
+                if (!isVideoFinished) {
+                    console.log("Mode terang dikunci hingga video selesai.");
+                    return; // Hentikan fungsi jika video belum selesai
+                }
+
+                document.body.classList.toggle('light-mode');
+                
+                // [BARU] Logika tambahan untuk menangani opacity gambar
+                // Jika kita beralih ke mode terang, dan video SUDAH berakhir
+                // (yang ditandai dengan opacity video = 0),
+                // kita tidak perlu melakukan apa-apa karena CSS !important akan menang.
+                // Jika kita beralih ke mode gelap, kita harus MENGATUR ULANG opacity gambar
+                // ke 0.35 jika video sudah berakhir.
+                if (!document.body.classList.contains('light-mode') && bgVideo.style.opacity === '0') {
+                     bgImage.style.opacity = '0.35';
+                }
+            });
             // --- [AKHIR BARU] ---
 
-            // [BARU] Deklarasi variabel logo
-            const logoContainer = document.getElementById('logo-container'); 
+
+            // [MODIFIKASI] Event listener menu mobile
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.add('open');
+                mobileMenuOverlay.classList.remove('hidden');
+                document.body.classList.add('overflow-hidden');
+            });
+
+            mobileMenuOverlay.addEventListener('click', closeMobileMenu); // [BARU]
+
+            // Fungsionalitas inti (TIDAK BERUBAH)
+            portalForm.addEventListener('submit', handlePortalFormSubmit);
+            importFileInput.addEventListener('change', handleFileImport);
+            confirmCancelBtn.addEventListener('click', () => confirmationModal.classList.add('hidden'));
+            confirmOkBtn.addEventListener('click', () => {
+                if (typeof onConfirmCallback === 'function') {
+                    onConfirmCallback();
+                }
+                confirmationModal.classList.add('hidden');
+                onConfirmCallback = null;
+            });
+        }
+
+        // [BARU] Fungsi untuk menutup menu mobile
+        window.closeMobileMenu = function() {
+            mobileMenu.classList.remove('open');
+            mobileMenuOverlay.classList.add('hidden');
+            document.body.classList.remove('overflow-hidden');
+        }
+
+        window.showConfirmationModal = function(message, callback) {
+            confirmationMessage.textContent = message;
+            onConfirmCallback = callback;
+            confirmationModal.classList.remove('hidden');
+        }
+
+        // --- [MODIFIKASI] Render Kartu Portal ---
+        function renderPortals() {
+            portalsGrid.innerHTML = '';
+
+            portals.forEach((portal, index) => {
+                const portalElement = document.createElement('div');
+                // 'h-full' ditambahkan agar semua kartu sama tinggi jika deskripsinya berbeda
+                portalElement.className = 'h-full'; 
+
+                const portalColor = portal.color || '#00d4ff';
+                // 'currentColor' akan mengambil warna dari 'color' di style utama
+                const cardStyle = `color: ${portalColor}; border-color: ${portalColor}; box-shadow: 0 0 15px ${portalColor}33;`;
+                const textStyle = `color: ${portalColor}; text-shadow: 0 0 10px ${portalColor};`;
+                
+                // Ikon default jika tidak ada ikon atau ikon tidak valid
+                let iconClass = portal.icon || 'fas fa-globe';
+                if (!portal.icon || (!portal.icon.startsWith('fa') && !portal.icon.startsWith('http') && !portal.icon.startsWith('data:image'))) {
+                    iconClass = 'fas fa-globe'; 
+                }
+
+                const iconHtml = (iconClass.startsWith('data:image') || iconClass.startsWith('http'))
+                    ? `<img src="${iconClass}" class="mx-auto h-12 w-12 mb-4 object-contain" alt="${portal.name} icon" onerror="this.style.display='none'; this.nextSibling.style.display='block';">` + // Fallback jika gambar gagal dimuat
+                      `<i class="fas fa-globe text-4xl mb-4 hidden" style="${textStyle}"></i>`
+                    : `<i class="${iconClass} text-4xl mb-4" style="${textStyle}"></i>`;
+
+                // Deskripsi dengan spasi non-breaking agar kartu tetap punya tinggi
+                const descriptionHtml = portal.description ? portal.description : '&nbsp;';
+
+                portalElement.innerHTML = `
+                    <div class="portal-card h-full" style="${cardStyle}">
+                        <a href="${portal.url}" target="_blank" class="block h-full p-6 text-center relative flex flex-col justify-start">
+                            <!-- Konten Kartu --><div class="relative z-10 flex-grow flex flex-col items-center justify-center">
+                                ${iconHtml}
+                                <h3 class="font-bold uppercase tracking-wider break-words text-lg mb-2 font-orbitron" style="${textStyle}">${portal.name}</h3>
+                                <p class="text-sm text-gray-300 mt-2 leading-normal font-rajdhani">${descriptionHtml}</p>
+                            </div>
+                            
+                            <!-- Tombol Hapus (Styling Baru) --><button onclick="event.preventDefault(); event.stopPropagation(); showConfirmationModal('Yakin ingin menghapus portal ${portal.name}?', () => deletePortalAction(${index}))"
+                                    class="delete-btn">
+                                <i class="fas fa-times text-sm"></i>
+                            </button>
+                        </a>
+                    </div>
+                `;
+
+                portalsGrid.appendChild(portalElement);
+            });
+        }
+
+        // --- Fungsionalitas Inti (TIDAK BERUBAH) ---
+
+        function handlePortalFormSubmit(e) {
+            e.preventDefault();
+
+            const name = document.getElementById('portal-name').value;
+            const url = document.getElementById('portal-url').value || "#";
+            const description = document.getElementById('portal-description').value || "";
             
-            const portalsGrid = document.getElementById('portals-grid');
-            const portalForm = document.getElementById('portal-form');
-            const mobileMenuButton = document.getElementById('mobile-menu-button');
-            const mobileMenu = document.getElementById('mobile-menu');
-            const mobileMenuOverlay = document.getElementById('mobile-menu-overlay'); // [BARU]
-            const timeDisplay = document.getElementById('time');
-            const dateDisplay = document.getElementById('date');
-            const importFileInput = document.getElementById('import-file-input');
-            const confirmationModal = document.getElementById('confirmation-modal');
-            const confirmationMessage = document.getElementById('confirmation-message');
-            const confirmOkBtn = document.getElementById('confirm-ok-btn');
-            const confirmCancelBtn = document.getElementById('confirm-cancel-btn');
+            // [PERUBAHAN DIMULAI] Ambil nilai ikon dari select
+            const icon = document.getElementById('portal-icon').value;
+            // [PERUBAHAN SELESAI]
+            
+            const color = document.querySelector('input[name="portal-color"]:checked').value;
 
-            let portals = [];
-            let onConfirmCallback = null;
+            addPortalToArray(name, url, icon, color, description);
+        }
 
-            // Default portal (TIDAK BERUBAH)
-            const defaultPortals = [
-                { 
-                    name: 'Layla Premium Access', 
-                    url: 'https://api.whatsapp.com/send/?phone=6287872521809&text=Halo%2C+saya+ingin+membeli+Akses+Website+Premium+Tanpa+Iklan+sebesar+Rp25.000.+Mohon+transfer+ke+DANA+087734421123+dan+kirimkan+bukti+pembayarannya.+Pesanan+akan+diproses+maksimal+1x24+jam.+Terima+kasih.&type=phone_number&app_absent=0', 
-                    icon: 'fas fa-gem', 
-                    color: '#bf00ff', 
-                    description: 'Upgrade sekarang — akses semua website uranus tanpa iklan cuma Rp25K' 
-                },
-                { 
-                    name: 'Buy Layla Nexus Sea Code', 
-                    url: 'https://api.whatsapp.com/send/?phone=6287872521809&text=Halo%2C+saya+ingin+membeli+Kode+Website+MLBB+Layla+Skin+Nexus+Sea+sebesar+Rp100.000.+Mohon+transfer+ke+DANA+087734421123+dan+kirimkan+bukti+pembayarannya.+Pesanan+akan+diproses+maksimal+1x24+jam.+Terima+kasih.&type=phone_number&app_absent=0', 
-                    icon: 'fas fa-shopping-cart', 
-                    color: '#00f0ff', 
-                    description: 'Beli kode website MLBB Layla Nexus Sea edisi premium seharga Rp100K' 
-                }
-            ];
+        function addPortalToArray(name, url, icon, color, description) {
+            portals.push({ name, url, icon, color, description });
+            savePortals();
+            renderPortals();
+            document.getElementById('add-portal-modal').classList.add('hidden');
+            resetPortalForm();
+        }
 
-            function initPortalApp() {
-                portals = JSON.parse(localStorage.getItem('portals')) || defaultPortals;
-                renderPortals();
-                updateTime();
-                setInterval(updateTime, 1000);
+        window.deletePortalAction = function(index) {
+            portals.splice(index, 1);
+            savePortals();
+            renderPortals();
+        }
 
-                // --- [BARU] Event listener untuk light mode toggle ---
-                logoContainer.addEventListener('click', () => {
-                    
-                    // [MODIFIKASI] Tambahkan pengecekan apakah video sudah selesai
-                    if (!isVideoFinished) {
-                        console.log("Mode terang dikunci hingga video selesai.");
-                        return; // Hentikan fungsi jika video belum selesai
-                    }
+        function resetPortalForm() {
+            portalForm.reset();
+        }
 
-                    document.body.classList.toggle('light-mode');
-                    
-                    // [BARU] Logika tambahan untuk menangani opacity gambar
-                    // Jika kita beralih ke mode terang, dan video SUDAH berakhir
-                    // (yang ditandai dengan opacity video = 0),
-                    // kita tidak perlu melakukan apa-apa karena CSS !important akan menang.
-                    // Jika kita beralih ke mode gelap, kita harus MENGATUR ULANG opacity gambar
-                    // ke 0.35 jika video sudah berakhir.
-                    if (!document.body.classList.contains('light-mode') && bgVideo.style.opacity === '0') {
-                         bgImage.style.opacity = '0.35';
-                    }
-                });
-                // --- [AKHIR BARU] ---
+        function savePortals() {
+            localStorage.setItem('portals', JSON.stringify(portals));
+        }
 
-
-                // [MODIFIKASI] Event listener menu mobile
-                mobileMenuButton.addEventListener('click', () => {
-                    mobileMenu.classList.add('open');
-                    mobileMenuOverlay.classList.remove('hidden');
-                    document.body.classList.add('overflow-hidden');
-                });
-
-                mobileMenuOverlay.addEventListener('click', closeMobileMenu); // [BARU]
-
-                // Fungsionalitas inti (TIDAK BERUBAH)
-                portalForm.addEventListener('submit', handlePortalFormSubmit);
-                importFileInput.addEventListener('change', handleFileImport);
-                confirmCancelBtn.addEventListener('click', () => confirmationModal.classList.add('hidden'));
-                confirmOkBtn.addEventListener('click', () => {
-                    if (typeof onConfirmCallback === 'function') {
-                        onConfirmCallback();
-                    }
-                    confirmationModal.classList.add('hidden');
-                    onConfirmCallback = null;
-                });
+        window.showAddLinkModal = function() {
+            document.getElementById('add-portal-modal').classList.remove('hidden');
+            resetPortalForm();
+            if (mobileMenu.classList.contains('open')) { // Tutup menu mobile jika sedang terbuka
+                closeMobileMenu();
             }
+        }
 
-            // [BARU] Fungsi untuk menutup menu mobile
-            window.closeMobileMenu = function() {
-                mobileMenu.classList.remove('open');
-                mobileMenuOverlay.classList.add('hidden');
-                document.body.classList.remove('overflow-hidden');
-            }
+        function updateTime() {
+            const now = new Date();
+            timeDisplay.textContent = now.toLocaleTimeString('en-GB');
+            dateDisplay.textContent = now.toLocaleDateString('id-ID', {
+                weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+            });
+        }
 
-            window.showConfirmationModal = function(message, callback) {
-                confirmationMessage.textContent = message;
-                onConfirmCallback = callback;
-                confirmationModal.classList.remove('hidden');
-            }
+        window.resetAllSettings = function() {
+            localStorage.removeItem('portals');
+            location.reload();
+        }
 
-            // --- [MODIFIKASI] Render Kartu Portal ---
-            function renderPortals() {
-                portalsGrid.innerHTML = '';
-
-                portals.forEach((portal, index) => {
-                    const portalElement = document.createElement('div');
-                    // 'h-full' ditambahkan agar semua kartu sama tinggi jika deskripsinya berbeda
-                    portalElement.className = 'h-full'; 
-
-                    const portalColor = portal.color || '#00d4ff';
-                    // 'currentColor' akan mengambil warna dari 'color' di style utama
-                    const cardStyle = `color: ${portalColor}; border-color: ${portalColor}; box-shadow: 0 0 15px ${portalColor}33;`;
-                    const textStyle = `color: ${portalColor}; text-shadow: 0 0 10px ${portalColor};`;
-                    
-                    // Ikon default jika tidak ada ikon atau ikon tidak valid
-                    let iconClass = portal.icon || 'fas fa-globe';
-                    if (!portal.icon || (!portal.icon.startsWith('fa') && !portal.icon.startsWith('http') && !portal.icon.startsWith('data:image'))) {
-                        iconClass = 'fas fa-globe'; 
-                    }
-
-                    const iconHtml = (iconClass.startsWith('data:image') || iconClass.startsWith('http'))
-                        ? `<img src="${iconClass}" class="mx-auto h-12 w-12 mb-4 object-contain" alt="${portal.name} icon" onerror="this.style.display='none'; this.nextSibling.style.display='block';">` + // Fallback jika gambar gagal dimuat
-                          `<i class="fas fa-globe text-4xl mb-4 hidden" style="${textStyle}"></i>`
-                        : `<i class="${iconClass} text-4xl mb-4" style="${textStyle}"></i>`;
-
-                    // Deskripsi dengan spasi non-breaking agar kartu tetap punya tinggi
-                    const descriptionHtml = portal.description ? portal.description : '&nbsp;';
-
-                    portalElement.innerHTML = `
-                        <div class="portal-card h-full" style="${cardStyle}">
-                            <a href="${portal.url}" target="_blank" class="block h-full p-6 text-center relative flex flex-col justify-start">
-                                <!-- Konten Kartu --><div class="relative z-10 flex-grow flex flex-col items-center justify-center">
-                                    ${iconHtml}
-                                    <h3 class="font-bold uppercase tracking-wider break-words text-lg mb-2 font-orbitron" style="${textStyle}">${portal.name}</h3>
-                                    <p class="text-sm text-gray-300 mt-2 leading-normal font-rajdhani">${descriptionHtml}</p>
-                                </div>
-                                
-                                <!-- Tombol Hapus (Styling Baru) --><button onclick="event.preventDefault(); event.stopPropagation(); showConfirmationModal('Yakin ingin menghapus portal ${portal.name}?', () => deletePortalAction(${index}))"
-                                        class="delete-btn">
-                                    <i class="fas fa-times text-sm"></i>
-                                </button>
-                            </a>
-                        </div>
-                    `;
-
-                    portalsGrid.appendChild(portalElement);
-                });
-            }
-
-            // --- Fungsionalitas Inti (TIDAK BERUBAH) ---
-
-            function handlePortalFormSubmit(e) {
-                e.preventDefault();
-
-                const name = document.getElementById('portal-name').value;
-                const url = document.getElementById('portal-url').value || "#";
-                const description = document.getElementById('portal-description').value || "";
-                
-                // [PERUBAHAN DIMULAI] Ambil nilai ikon dari select
-                const icon = document.getElementById('portal-icon').value;
-                // [PERUBAHAN SELESAI]
-                
-                const color = document.querySelector('input[name="portal-color"]:checked').value;
-
-                addPortalToArray(name, url, icon, color, description);
-            }
-
-            function addPortalToArray(name, url, icon, color, description) {
-                portals.push({ name, url, icon, color, description });
-                savePortals();
-                renderPortals();
-                document.getElementById('add-portal-modal').classList.add('hidden');
-                resetPortalForm();
-            }
-
-            window.deletePortalAction = function(index) {
-                portals.splice(index, 1);
-                savePortals();
-                renderPortals();
-            }
-
-            function resetPortalForm() {
-                portalForm.reset();
-            }
-
-            function savePortals() {
-                localStorage.setItem('portals', JSON.stringify(portals));
-            }
-
-            window.showAddLinkModal = function() {
-                document.getElementById('add-portal-modal').classList.remove('hidden');
-                resetPortalForm();
-                if (mobileMenu.classList.contains('open')) { // Tutup menu mobile jika sedang terbuka
-                    closeMobileMenu();
-                }
-            }
-
-            function updateTime() {
-                const now = new Date();
-                timeDisplay.textContent = now.toLocaleTimeString('en-GB');
-                dateDisplay.textContent = now.toLocaleDateString('id-ID', {
-                    weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
-                });
-            }
-
-            window.resetAllSettings = function() {
-                localStorage.removeItem('portals');
-                location.reload();
-            }
-
-            window.backupData = async () => {
-                const dataToBackup = {
-                    portals: JSON.parse(localStorage.getItem('portals')) || defaultPortals,
-                };
-                const dataStr = JSON.stringify(dataToBackup, null, 2);
-                try {
-                    const zip = new JSZip();
-                    zip.file("uranusfazry_backup.json", dataStr);
-                    const content = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
-                    const url = URL.createObjectURL(content);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'uranusfazry_backup.zip';
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    URL.revokeObjectURL(url);
-                } catch (error) {
-                    console.error("Error creating ZIP file:", error);
-                    alert("Gagal membuat file backup ZIP.");
-                }
+        window.backupData = async () => {
+            const dataToBackup = {
+                portals: JSON.parse(localStorage.getItem('portals')) || defaultPortals,
             };
+            const dataStr = JSON.stringify(dataToBackup, null, 2);
+            try {
+                const zip = new JSZip();
+                zip.file("uranusfazry_backup.json", dataStr);
+                const content = await zip.generateAsync({ type: "blob", compression: "DEFLATE" });
+                const url = URL.createObjectURL(content);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'uranusfazry_backup.zip';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+            } catch (error) {
+                console.error("Error creating ZIP file:", error);
+                alert("Gagal membuat file backup ZIP.");
+            }
+        };
 
-            window.importData = () => {
-                importFileInput.click();
-            };
+        window.importData = () => {
+            importFileInput.click();
+        };
 
-            async function handleFileImport(event) {
-                const file = event.target.files[0];
-                if (!file) return;
+        async function handleFileImport(event) {
+            const file = event.target.files[0];
+            if (!file) return;
 
-                if (file.type === "application/zip" || file.name.endsWith(".zip")) {
-                    const reader = new FileReader();
-                    reader.onload = async (e) => {
-                        try {
-                            const zip = await JSZip.loadAsync(e.target.result);
-                            const backupFile = zip.file("uranusfazry_backup.json");
-                            if (backupFile) {
-                                const jsonContent = await backupFile.async("string");
-                                await processImportedData(jsonContent);
-                            } else {
-                                alert('File ZIP tidak valid: "uranusfazry_backup.json" tidak ditemukan.');
-                            }
-                        } catch (error) {
-                            console.error('Error reading ZIP file:', error);
-                            alert('Gagal membaca file ZIP. File mungkin rusak.');
+            if (file.type === "application/zip" || file.name.endsWith(".zip")) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    try {
+                        const zip = await JSZip.loadAsync(e.target.result);
+                        const backupFile = zip.file("uranusfazry_backup.json");
+                        if (backupFile) {
+                            const jsonContent = await backupFile.async("string");
+                            await processImportedData(jsonContent);
+                        } else {
+                            alert('File ZIP tidak valid: "uranusfazry_backup.json" tidak ditemukan.');
                         }
-                    };
-                    reader.readAsArrayBuffer(file);
-                } else if (file.type === "text/plain" || file.type === "application/json" || file.name.endsWith(".txt")) {
-                    const reader = new FileReader();
-                    reader.onload = async (e) => {
-                        await processImportedData(e.target.result);
-                    };
-                    reader.readAsText(file);
-                } else {
-                    alert("Tipe file tidak didukung. Silakan unggah file backup .zip atau .txt.");
-                }
-                event.target.value = '';
-            }
-
-            async function processImportedData(jsonContent) {
-                try {
-                    const importedData = JSON.parse(jsonContent);
-                    if (importedData && Array.isArray(importedData.portals)) {
-                        localStorage.setItem('portals', JSON.stringify(importedData.portals));
-                        showConfirmationModal('Data berhasil diimpor. Halaman akan dimuat ulang.', () => {
-                            location.reload();
-                        });
-                    } else {
-                        alert('Format file backup tidak valid.');
+                    } catch (error) {
+                        console.error('Error reading ZIP file:', error);
+                        alert('Gagal membaca file ZIP. File mungkin rusak.');
                     }
-                } catch (error) {
-                    console.error('Error parsing backup file:', error);
-                    alert('Gagal membaca file backup. File mungkin rusak atau formatnya salah.');
-                }
+                };
+                reader.readAsArrayBuffer(file);
+            } else if (file.type === "text/plain" || file.type === "application/json" || file.name.endsWith(".txt")) {
+                const reader = new FileReader();
+                reader.onload = async (e) => {
+                    await processImportedData(e.target.result);
+                };
+                reader.readAsText(file);
+            } else {
+                alert("Tipe file tidak didukung. Silakan unggah file backup .zip atau .txt.");
             }
+            event.target.value = '';
+        }
 
-            initPortalApp();
-        });
-    </script>
+        async function processImportedData(jsonContent) {
+            try {
+                const importedData = JSON.parse(jsonContent);
+                if (importedData && Array.isArray(importedData.portals)) {
+                    localStorage.setItem('portals', JSON.stringify(importedData.portals));
+                    showConfirmationModal('Data berhasil diimpor. Halaman akan dimuat ulang.', () => {
+                        location.reload();
+                    });
+                } else {
+                    alert('Format file backup tidak valid.');
+                }
+            } catch (error) {
+                console.error('Error parsing backup file:', error);
+                alert('Gagal membaca file backup. File mungkin rusak atau formatnya salah.');
+            }
+        }
+
+        initPortalApp();
+    });
+</script>
 
 </body>
 </html>
